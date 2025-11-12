@@ -2,8 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppProviders } from "@/providers/AppProviders";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
@@ -24,18 +26,19 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/products" element={<Products />} />
-        <Route path="/admin/orders" element={<Orders />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/categories" element={<Categories />} />
-        <Route path="/admin/flagged" element={<FlaggedContent />} />
-        <Route path="/admin/appeals" element={<Appeals />} />
-        <Route path="/admin/spotlight" element={<Spotlight />} />
-        <Route path="/admin/payouts" element={<Payouts />} />
-        <Route path="/admin/verification" element={<BusinessVerification />} />
-        <Route path="/admin/analytics" element={<Analytics />} />
-        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/admin/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+        <Route path="/admin/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/admin/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+        <Route path="/admin/flagged" element={<ProtectedRoute><FlaggedContent /></ProtectedRoute>} />
+        <Route path="/admin/appeals" element={<ProtectedRoute><Appeals /></ProtectedRoute>} />
+        <Route path="/admin/spotlight" element={<ProtectedRoute><Spotlight /></ProtectedRoute>} />
+        <Route path="/admin/payouts" element={<ProtectedRoute><Payouts /></ProtectedRoute>} />
+        <Route path="/admin/verification" element={<ProtectedRoute><BusinessVerification /></ProtectedRoute>} />
+        <Route path="/admin/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
