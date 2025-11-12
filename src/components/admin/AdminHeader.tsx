@@ -10,8 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
 
 export const AdminHeader = () => {
+  const { user, logout } = useAuth();
+
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 shadow-sm">
       <div className="flex items-center gap-4 flex-1">
@@ -37,11 +40,18 @@ export const AdminHeader = () => {
               <div className="w-8 h-8 rounded-full gradient-driptyard flex items-center justify-center shadow-md">
                 <UserCircle2 className="h-5 w-5 text-white" strokeWidth={2} />
               </div>
-              <span className="text-sm font-medium hidden md:inline">Admin</span>
+              <span className="text-sm font-medium hidden md:inline">{user?.name || 'Admin'}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel className="font-semibold">My Account</DropdownMenuLabel>
+            <DropdownMenuLabel className="font-semibold">
+              <div className="flex flex-col">
+                <span>{user?.name || 'Admin User'}</span>
+                <span className="text-xs font-normal text-muted-foreground">
+                  {user?.email || 'admin@driptyard.com'}
+                </span>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
               <User className="h-4 w-4 mr-2" />
@@ -52,7 +62,7 @@ export const AdminHeader = () => {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive cursor-pointer focus:text-destructive">
+            <DropdownMenuItem onClick={logout} className="text-destructive cursor-pointer focus:text-destructive">
               <LogOut className="h-4 w-4 mr-2" />
               Log out
             </DropdownMenuItem>

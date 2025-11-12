@@ -16,66 +16,19 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-
-const users = [
-  { 
-    id: 1, 
-    name: "John Doe", 
-    email: "john@example.com", 
-    role: "customer", 
-    orders: 12, 
-    joined: "2024-03-15",
-    status: "active",
-    verified: true,
-    totalSales: "$2,450"
-  },
-  { 
-    id: 2, 
-    name: "Jane Smith", 
-    email: "jane@example.com", 
-    role: "seller", 
-    orders: 45, 
-    joined: "2024-05-20",
-    status: "active",
-    verified: true,
-    totalSales: "$8,920"
-  },
-  { 
-    id: 3, 
-    name: "Mike Johnson", 
-    email: "mike@example.com", 
-    role: "seller", 
-    orders: 67, 
-    joined: "2024-01-10",
-    status: "banned",
-    verified: false,
-    totalSales: "$0"
-  },
-  { 
-    id: 4, 
-    name: "Sarah Williams", 
-    email: "sarah@example.com", 
-    role: "customer", 
-    orders: 3, 
-    joined: "2024-11-05",
-    status: "active",
-    verified: false,
-    totalSales: "$1,200"
-  },
-];
+import { useAdmin } from "@/hooks/useAdmin";
 
 export default function Users() {
+  const { users, banUser, verifyUser, updateUser } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
   const [editingUser, setEditingUser] = useState<any>(null);
 
-  const handleBanUser = (userId: number) => {
-    console.log("Banning user:", userId);
-    // TODO: Call API
+  const handleBanUser = (userId: string) => {
+    banUser(userId);
   };
 
-  const handleVerifyUser = (userId: number) => {
-    console.log("Verifying user:", userId);
-    // TODO: Call API
+  const handleVerifyUser = (userId: string) => {
+    verifyUser(userId);
   };
 
   const handleEditUser = (user: any) => {
@@ -83,9 +36,14 @@ export default function Users() {
   };
 
   const handleSaveUser = () => {
-    console.log("Saving user:", editingUser);
-    // TODO: Call API
-    setEditingUser(null);
+    if (editingUser) {
+      updateUser(editingUser.id, {
+        name: editingUser.name,
+        email: editingUser.email,
+        role: editingUser.role,
+      });
+      setEditingUser(null);
+    }
   };
 
   return (
@@ -168,7 +126,7 @@ export default function Users() {
                       )}
                     </TableCell>
                     <TableCell className="font-medium">{user.totalSales}</TableCell>
-                    <TableCell>{user.joined}</TableCell>
+                    <TableCell>{user.joinDate}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Dialog>
@@ -217,7 +175,7 @@ export default function Users() {
                           <Button 
                             variant="ghost" 
                             size="sm"
-                            onClick={() => handleVerifyUser(user.id)}
+                            onClick={() => handleVerifyUser(user.id.toString())}
                             className="text-green-600 hover:text-green-700"
                           >
                             <CheckCircle className="h-4 w-4" />
@@ -227,7 +185,7 @@ export default function Users() {
                           <Button 
                             variant="ghost" 
                             size="sm"
-                            onClick={() => handleBanUser(user.id)}
+                            onClick={() => handleBanUser(user.id.toString())}
                             className="text-red-600 hover:text-red-700"
                           >
                             <Ban className="h-4 w-4" />
