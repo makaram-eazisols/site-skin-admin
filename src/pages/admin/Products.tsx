@@ -55,11 +55,11 @@ interface Product {
   category: string;
   condition: string;
   stock_quantity: number;
-  stock_status: string;
   is_active: boolean;
   is_sold: boolean;
   is_verified: boolean;
   is_flagged: boolean;
+  is_featured: boolean;
   images: string[];
   owner_id: string;
   created_at: string;
@@ -135,7 +135,7 @@ export default function Products() {
         is_active: editProduct.is_active,
         is_verified: editProduct.is_verified,
         is_flagged: editProduct.is_flagged,
-        stock_status: editProduct.stock_status,
+        is_featured: editProduct.is_featured,
       });
       toast({
         title: "Success",
@@ -159,8 +159,6 @@ export default function Products() {
     if (product.is_sold) return "secondary";
     if (product.is_flagged) return "destructive";
     if (!product.is_verified) return "secondary";
-    if (product.stock_status === "Out of Stock") return "destructive";
-    if (product.stock_status === "Limited") return "secondary";
     return "default";
   };
 
@@ -169,7 +167,8 @@ export default function Products() {
     if (product.is_sold) return "Sold";
     if (product.is_flagged) return "Flagged";
     if (!product.is_verified) return "Unverified";
-    return product.stock_status;
+    if (product.is_featured) return "Featured";
+    return "Active";
   };
   return (
     <AdminLayout>
@@ -222,7 +221,7 @@ export default function Products() {
                       <TableHead>Product Name</TableHead>
                       <TableHead>Category</TableHead>
                       <TableHead>Price</TableHead>
-                      <TableHead>Stock</TableHead>
+                      <TableHead>Condition</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -233,7 +232,7 @@ export default function Products() {
                         <TableCell className="font-medium">{product.title}</TableCell>
                         <TableCell>{product.category || "—"}</TableCell>
                         <TableCell className="font-semibold">${Number(product.price).toFixed(2)}</TableCell>
-                        <TableCell>{product.stock_quantity}</TableCell>
+                        <TableCell>{product.condition || "—"}</TableCell>
                         <TableCell>
                           <Badge variant={getStatusBadgeVariant(product)}>
                             {getStatusText(product)}
@@ -359,23 +358,15 @@ export default function Products() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="stock-status">Stock Status</Label>
-                <Select
-                  value={editProduct.stock_status}
-                  onValueChange={(value) =>
-                    setEditProduct({ ...editProduct, stock_status: value })
+              <div className="flex items-center justify-between">
+                <Label htmlFor="is-featured">Featured</Label>
+                <Switch
+                  id="is-featured"
+                  checked={editProduct.is_featured}
+                  onCheckedChange={(checked) =>
+                    setEditProduct({ ...editProduct, is_featured: checked })
                   }
-                >
-                  <SelectTrigger id="stock-status">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="In Stock">In Stock</SelectItem>
-                    <SelectItem value="Out of Stock">Out of Stock</SelectItem>
-                    <SelectItem value="Limited">Limited</SelectItem>
-                  </SelectContent>
-                </Select>
+                />
               </div>
 
               <div className="flex justify-end gap-2 pt-4">

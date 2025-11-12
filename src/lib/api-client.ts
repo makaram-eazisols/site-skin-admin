@@ -205,7 +205,6 @@ class ApiClient {
     is_sold?: boolean;
     is_verified?: boolean;
     is_flagged?: boolean;
-    stock_status?: string;
   }) {
     const response = await this.client.get('/admin/products', { params });
     return response.data;
@@ -215,7 +214,7 @@ class ApiClient {
     is_active?: boolean;
     is_verified?: boolean;
     is_flagged?: boolean;
-    stock_status?: string;
+    is_featured?: boolean;
   }) {
     const response = await this.client.patch(`/admin/products/${productId}`, data);
     return response.data;
