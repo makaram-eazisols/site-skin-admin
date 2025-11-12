@@ -189,6 +189,12 @@ class ApiClient {
     const response = await this.client.delete(`/products/${productId}`);
     return response.data;
   }
+
+  // ============ ADMIN ENDPOINTS ============
+  async getAdminStatsOverview() {
+    const response = await this.client.get('/admin/stats/overview');
+    return response.data;
+  }
 }
 
 export const apiClient = new ApiClient();

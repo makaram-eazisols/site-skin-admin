@@ -1,7 +1,10 @@
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, ShoppingBag, Users2, Package2, TrendingUp, Star } from "lucide-react";
+import { DollarSign, ShoppingBag, Users2, Package2, TrendingUp, Star, AlertCircle, Flag } from "lucide-react";
+import { useEffect, useState } from "react";
+import { apiClient } from "@/lib/api-client";
+import { useToast } from "@/hooks/use-toast";
 import {
   Table,
   TableBody,
@@ -27,7 +30,44 @@ const topProducts = [
   { name: "Fashion Accessories", sales: 142, revenue: "$28,400" },
 ];
 
+interface AdminStats {
+  total_users: number;
+  users_change: number;
+  total_products: number;
+  products_change: number;
+  pending_verifications: number;
+  flagged_content_count: number;
+}
+
 export default function Dashboard() {
+  const [stats, setStats] = useState<AdminStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await apiClient.getAdminStatsOverview();
+        setStats(data);
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to load dashboard statistics",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, [toast]);
+
+  const formatChange = (change: number) => {
+    const sign = change >= 0 ? "+" : "";
+    return `${sign}${change.toFixed(1)}%`;
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -36,36 +76,46 @@ export default function Dashboard() {
           <p className="text-muted-foreground mt-1">Welcome back! Here's what's happening today.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Total Revenue"
-            value="$45,231"
-            change="+20.1%"
-            icon={DollarSign}
-            trend="up"
-          />
-          <StatCard
-            title="Total Orders"
-            value="1,234"
-            change="+12.5%"
-            icon={ShoppingBag}
-            trend="up"
-          />
-          <StatCard
-            title="Total Users"
-            value="8,549"
-            change="+8.2%"
-            icon={Users2}
-            trend="up"
-          />
-          <StatCard
-            title="Total Products"
-            value="345"
-            change="-2.4%"
-            icon={Package2}
-            trend="down"
-          />
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="animate-pulse">
+                <CardContent className="p-6 h-32" />
+              </Card>
+            ))}
+          </div>
+        ) : stats ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StatCard
+              title="Total Users"
+              value={stats.total_users.toString()}
+              change={formatChange(stats.users_change)}
+              icon={Users2}
+              trend={stats.users_change >= 0 ? "up" : "down"}
+            />
+            <StatCard
+              title="Total Products"
+              value={stats.total_products.toString()}
+              change={formatChange(stats.products_change)}
+              icon={Package2}
+              trend={stats.products_change >= 0 ? "up" : "down"}
+            />
+            <StatCard
+              title="Pending Verifications"
+              value={stats.pending_verifications.toString()}
+              change="—"
+              icon={AlertCircle}
+              trend="up"
+            />
+            <StatCard
+              title="Flagged Content"
+              value={stats.flagged_content_count.toString()}
+              change="—"
+              icon={Flag}
+              trend="up"
+            />
+          </div>
+        ) : null}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
