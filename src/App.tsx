@@ -12,6 +12,11 @@ import Users from "./pages/admin/Users";
 import Categories from "./pages/admin/Categories";
 import Analytics from "./pages/admin/Analytics";
 import Settings from "./pages/admin/Settings";
+import FlaggedContent from "./pages/admin/FlaggedContent";
+import Appeals from "./pages/admin/Appeals";
+import Spotlight from "./pages/admin/Spotlight";
+import Payouts from "./pages/admin/Payouts";
+import BusinessVerification from "./pages/admin/BusinessVerification";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +33,11 @@ const App = () => (
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/categories" element={<Categories />} />
+          <Route path="/admin/flagged" element={<FlaggedContent />} />
+          <Route path="/admin/appeals" element={<Appeals />} />
+          <Route path="/admin/spotlight" element={<Spotlight />} />
+          <Route path="/admin/payouts" element={<Payouts />} />
+          <Route path="/admin/verification" element={<BusinessVerification />} />
           <Route path="/admin/analytics" element={<Analytics />} />
           <Route path="/admin/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

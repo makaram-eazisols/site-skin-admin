@@ -1,4 +1,18 @@
-import { Home, Package2, ShoppingBag, Users2, Grid3x3, LineChart, Settings2, ShoppingCart } from "lucide-react";
+import { 
+  Home, 
+  Package2, 
+  ShoppingBag, 
+  Users2, 
+  Grid3x3, 
+  LineChart, 
+  Settings2, 
+  ShoppingCart,
+  Flag,
+  MessageSquare,
+  Star,
+  DollarSign,
+  Building2
+} from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 import {
@@ -19,6 +33,11 @@ const menuItems = [
   { title: "Orders", url: "/admin/orders", icon: ShoppingBag },
   { title: "Users", url: "/admin/users", icon: Users2 },
   { title: "Categories", url: "/admin/categories", icon: Grid3x3 },
+  { title: "Flagged Content", url: "/admin/flagged", icon: Flag },
+  { title: "Appeals", url: "/admin/appeals", icon: MessageSquare },
+  { title: "Spotlight", url: "/admin/spotlight", icon: Star },
+  { title: "Payouts", url: "/admin/payouts", icon: DollarSign },
+  { title: "Business Verification", url: "/admin/verification", icon: Building2 },
   { title: "Analytics", url: "/admin/analytics", icon: LineChart },
   { title: "Settings", url: "/admin/settings", icon: Settings2 },
 ];
