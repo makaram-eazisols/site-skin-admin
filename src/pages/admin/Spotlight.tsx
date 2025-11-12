@@ -112,7 +112,7 @@ const Spotlight = () => {
             <CardTitle>Add Product to Spotlight</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-end">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
@@ -122,8 +122,10 @@ const Spotlight = () => {
                   className="pl-10"
                 />
               </div>
-              <div className="w-48">
-                <Label htmlFor="duration" className="text-sm">Spotlight Duration (days)</Label>
+              <div className="w-48 space-y-2">
+                <Label htmlFor="duration" className="text-sm font-medium">
+                  Spotlight Duration (days)
+                </Label>
                 <Input
                   id="duration"
                   type="number"
