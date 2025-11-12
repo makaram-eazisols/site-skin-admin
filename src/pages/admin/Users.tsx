@@ -278,14 +278,14 @@ export default function Users() {
                               >
                                 <UserCheck className="h-4 w-4" />
                               </Button> */}
-                              <Button
+                              {/* <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleBanUser(user.id, user.is_banned)}
                                 className={user.is_banned ? "text-orange-600" : "text-red-600"}
                               >
                                 <Ban className="h-4 w-4" />
-                              </Button>
+                              </Button> */}
                               <Button
                                 variant="ghost"
                                 size="sm"
