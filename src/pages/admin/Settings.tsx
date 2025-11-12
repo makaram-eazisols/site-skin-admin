@@ -32,7 +32,7 @@ export default function Settings() {
               <Label htmlFor="store-phone">Phone Number</Label>
               <Input id="store-phone" type="tel" defaultValue="+1 (555) 123-4567" />
             </div>
-            <Button className="gradient-driptyard text-white hover:opacity-90">
+            <Button className="gradient-driptyard-hover text-white shadow-md">
               Save Changes
             </Button>
           </CardContent>
@@ -82,7 +82,7 @@ export default function Settings() {
               <Label htmlFor="tax-rate">Tax Rate (%)</Label>
               <Input id="tax-rate" type="number" defaultValue="8.5" />
             </div>
-            <Button className="gradient-driptyard text-white hover:opacity-90">
+            <Button className="gradient-driptyard-hover text-white shadow-md">
               Update Payment Settings
             </Button>
           </CardContent>

@@ -37,10 +37,10 @@ export default function Orders() {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search orders..." className="pl-10" />
+                <Input placeholder="Search orders..." className="pl-10 bg-background" />
               </div>
-              <Button variant="outline">
-                <Filter className="h-4 w-4 mr-2" />
+              <Button variant="outline" className="gap-2">
+                <Filter className="h-4 w-4" />
                 Filter
               </Button>
             </div>

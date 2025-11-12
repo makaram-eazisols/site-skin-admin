@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -10,8 +10,8 @@ const Index = () => {
       <div className="text-center space-y-8 p-8">
         <div className="space-y-4">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-16 h-16 rounded-2xl gradient-driptyard flex items-center justify-center">
-              <ShoppingBag className="h-8 w-8 text-white" />
+            <div className="w-20 h-20 rounded-2xl gradient-driptyard flex items-center justify-center shadow-2xl">
+              <ShoppingCart className="h-10 w-10 text-white driptyard-icon" strokeWidth={2.5} />
             </div>
           </div>
           <h1 className="text-5xl font-bold gradient-driptyard-text">
@@ -24,11 +24,11 @@ const Index = () => {
         
         <Button 
           size="lg" 
-          className="gradient-driptyard text-white hover:opacity-90 text-lg px-8"
+          className="gradient-driptyard-hover text-white text-lg px-8 shadow-lg"
           onClick={() => navigate("/admin")}
         >
           Go to Admin Dashboard
-          <ArrowRight className="ml-2 h-5 w-5" />
+          <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2.5} />
         </Button>
       </div>
     </div>

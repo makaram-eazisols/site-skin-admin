@@ -2,7 +2,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, UserPlus } from "lucide-react";
+import { Search, UserPlus, Filter } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -32,8 +32,8 @@ export default function Users() {
             <h1 className="text-3xl font-bold gradient-driptyard-text">Users</h1>
             <p className="text-muted-foreground mt-1">Manage user accounts and permissions</p>
           </div>
-          <Button className="gradient-driptyard text-white hover:opacity-90">
-            <UserPlus className="h-4 w-4 mr-2" />
+          <Button className="gradient-driptyard-hover text-white shadow-md">
+            <UserPlus className="h-4 w-4 mr-2" strokeWidth={2.5} />
             Add User
           </Button>
         </div>
@@ -43,9 +43,12 @@ export default function Users() {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search users..." className="pl-10" />
+                <Input placeholder="Search users..." className="pl-10 bg-background" />
               </div>
-              <Button variant="outline">Filter</Button>
+              <Button variant="outline" className="gap-2">
+                <Filter className="h-4 w-4" />
+                Filter
+              </Button>
             </div>
 
             <Table>

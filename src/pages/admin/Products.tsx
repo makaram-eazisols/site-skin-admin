@@ -2,7 +2,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, MoreVertical, Edit, Trash2 } from "lucide-react";
+import { Plus, Search, MoreVertical, Edit2, Trash2, Filter } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -39,8 +39,8 @@ export default function Products() {
             <h1 className="text-3xl font-bold gradient-driptyard-text">Products</h1>
             <p className="text-muted-foreground mt-1">Manage your product inventory</p>
           </div>
-          <Button className="gradient-driptyard text-white hover:opacity-90">
-            <Plus className="h-4 w-4 mr-2" />
+          <Button className="gradient-driptyard-hover text-white shadow-md">
+            <Plus className="h-4 w-4 mr-2" strokeWidth={2.5} />
             Add Product
           </Button>
         </div>
@@ -50,9 +50,12 @@ export default function Products() {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search products..." className="pl-10" />
+                <Input placeholder="Search products..." className="pl-10 bg-background" />
               </div>
-              <Button variant="outline">Filter</Button>
+              <Button variant="outline" className="gap-2">
+                <Filter className="h-4 w-4" />
+                Filter
+              </Button>
             </div>
 
             <Table>
@@ -94,11 +97,11 @@ export default function Products() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Edit className="h-4 w-4 mr-2" />
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Edit2 className="h-4 w-4 mr-2" />
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-destructive">
+                          <DropdownMenuItem className="text-destructive cursor-pointer focus:text-destructive">
                             <Trash2 className="h-4 w-4 mr-2" />
                             Delete
                           </DropdownMenuItem>

@@ -1,8 +1,7 @@
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Plus, Edit2, Trash2 } from "lucide-react";
 
 const categories = [
   { id: 1, name: "Fashion", productCount: 234, icon: "👔", color: "from-purple-500 to-pink-500" },
@@ -22,8 +21,8 @@ export default function Categories() {
             <h1 className="text-3xl font-bold gradient-driptyard-text">Categories</h1>
             <p className="text-muted-foreground mt-1">Organize products into categories</p>
           </div>
-          <Button className="gradient-driptyard text-white hover:opacity-90">
-            <Plus className="h-4 w-4 mr-2" />
+          <Button className="gradient-driptyard-hover text-white shadow-md">
+            <Plus className="h-4 w-4 mr-2" strokeWidth={2.5} />
             Add Category
           </Button>
         </div>
@@ -40,11 +39,11 @@ export default function Categories() {
                   {category.productCount} products
                 </p>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Edit className="h-4 w-4 mr-1" />
+                  <Button variant="outline" size="sm" className="flex-1 hover:border-primary">
+                    <Edit2 className="h-4 w-4 mr-1" />
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                  <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive hover:text-destructive-foreground hover:border-destructive">
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>

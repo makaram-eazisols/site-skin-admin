@@ -1,7 +1,7 @@
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, ShoppingCart, Users, Package, TrendingUp, Eye } from "lucide-react";
+import { DollarSign, ShoppingBag, Users2, Package2, TrendingUp, Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -40,29 +40,29 @@ export default function Dashboard() {
           <StatCard
             title="Total Revenue"
             value="$45,231"
-            change="+20.1% from last month"
+            change="+20.1%"
             icon={DollarSign}
             trend="up"
           />
           <StatCard
             title="Total Orders"
             value="1,234"
-            change="+12.5% from last month"
-            icon={ShoppingCart}
+            change="+12.5%"
+            icon={ShoppingBag}
             trend="up"
           />
           <StatCard
             title="Total Users"
             value="8,549"
-            change="+8.2% from last month"
-            icon={Users}
+            change="+8.2%"
+            icon={Users2}
             trend="up"
           />
           <StatCard
             title="Total Products"
             value="345"
-            change="-2.4% from last month"
-            icon={Package}
+            change="-2.4%"
+            icon={Package2}
             trend="down"
           />
         </div>
@@ -70,8 +70,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                <ShoppingBag className="h-5 w-5 text-primary" strokeWidth={2.5} />
                 Recent Orders
               </CardTitle>
             </CardHeader>
@@ -115,8 +115,8 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                <TrendingUp className="h-5 w-5 text-accent" strokeWidth={2.5} />
                 Top Products
               </CardTitle>
             </CardHeader>
@@ -132,9 +132,9 @@ export default function Dashboard() {
                         <span className="text-white font-bold">{index + 1}</span>
                       </div>
                       <div>
-                        <p className="font-medium">{product.name}</p>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-                          <Eye className="h-3 w-3" />
+                        <p className="font-semibold text-sm">{product.name}</p>
+                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                          <Star className="h-3 w-3 fill-current text-accent" />
                           {product.sales} sales
                         </p>
                       </div>
