@@ -3,18 +3,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, Ban, CheckCircle, Edit2, Trash2, UserCheck, Loader2 } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -201,8 +203,8 @@ export default function Users() {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input 
-                  placeholder="Search users..." 
+                <Input
+                  placeholder="Search users..."
                   className="pl-10 bg-background"
                   value={searchTerm}
                   onChange={(e) => {
@@ -245,50 +247,47 @@ export default function Users() {
                               <Avatar>
                                 {user.avatar_url && <AvatarImage src={user.avatar_url} />}
                                 <AvatarFallback className="gradient-driptyard text-white">
-                                  {user.first_name?.[0]?.toUpperCase()}{user.last_name?.[0]?.toUpperCase() || user.username?.[0]?.toUpperCase() || 'U'}
+                                  {user.first_name?.[0]?.toUpperCase()}
+                                  {user.last_name?.[0]?.toUpperCase() || user.username?.[0]?.toUpperCase() || "U"}
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <div className="font-medium">{user.first_name} {user.last_name}</div>
+                                <div className="font-medium">
+                                  {user.first_name} {user.last_name}
+                                </div>
                                 <div className="text-xs text-muted-foreground">@{user.username}</div>
                               </div>
                             </div>
                           </TableCell>
                           <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                          <TableCell className="text-muted-foreground">{user.phone || '-'}</TableCell>
+                          <TableCell className="text-muted-foreground">{user.phone || "-"}</TableCell>
                           <TableCell>
-                            <Badge variant={getStatusBadgeVariant(user)}>
-                              {getStatusText(user)}
-                            </Badge>
+                            <Badge variant={getStatusBadgeVariant(user)}>{getStatusText(user)}</Badge>
                           </TableCell>
-                          <TableCell>{format(new Date(user.created_at), 'MMM dd, yyyy')}</TableCell>
+                          <TableCell>{format(new Date(user.created_at), "MMM dd, yyyy")}</TableCell>
                           <TableCell className="text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Button 
-                                variant="ghost" 
-                                size="sm"
-                                onClick={() => handleEditUser(user)}
-                              >
+                              <Button variant="ghost" size="sm" onClick={() => handleEditUser(user)}>
                                 <Edit2 className="h-4 w-4" />
                               </Button>
-                              <Button 
+                              {/* <Button 
                                 variant="ghost" 
                                 size="sm"
                                 onClick={() => handleVerifyUser(user.id, user.is_verified)}
                                 className={user.is_verified ? "text-green-600" : "text-muted-foreground"}
                               >
                                 <UserCheck className="h-4 w-4" />
-                              </Button>
-                              <Button 
-                                variant="ghost" 
+                              </Button> */}
+                              <Button
+                                variant="ghost"
                                 size="sm"
                                 onClick={() => handleBanUser(user.id, user.is_banned)}
                                 className={user.is_banned ? "text-orange-600" : "text-red-600"}
                               >
                                 <Ban className="h-4 w-4" />
                               </Button>
-                              <Button 
-                                variant="ghost" 
+                              <Button
+                                variant="ghost"
                                 size="sm"
                                 onClick={() => setDeleteUserId(user.id)}
                                 className="text-red-600 hover:text-red-700"
@@ -307,7 +306,7 @@ export default function Users() {
                   <div className="flex items-center justify-between mt-4">
                     <Button
                       variant="outline"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
                     >
                       Previous
@@ -317,7 +316,7 @@ export default function Users() {
                     </span>
                     <Button
                       variant="outline"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
                     >
                       Next
@@ -343,9 +342,7 @@ export default function Users() {
                 <Switch
                   id="is-active"
                   checked={editUser.is_active}
-                  onCheckedChange={(checked) =>
-                    setEditUser({ ...editUser, is_active: checked })
-                  }
+                  onCheckedChange={(checked) => setEditUser({ ...editUser, is_active: checked })}
                 />
               </div>
 
@@ -354,9 +351,7 @@ export default function Users() {
                 <Switch
                   id="is-verified"
                   checked={editUser.is_verified}
-                  onCheckedChange={(checked) =>
-                    setEditUser({ ...editUser, is_verified: checked })
-                  }
+                  onCheckedChange={(checked) => setEditUser({ ...editUser, is_verified: checked })}
                 />
               </div>
 
@@ -390,7 +385,10 @@ export default function Users() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteUser} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleDeleteUser}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
