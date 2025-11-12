@@ -1,11 +1,18 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
+import { apiClient } from "@/lib/api-client";
 
 export interface User {
   id: string;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
   name: string;
   email: string;
   role: "admin" | "seller" | "customer";
   avatar?: string;
+  phone?: string;
+  bio?: string;
+  verified?: boolean;
 }
 
 interface AuthContextType {
@@ -24,12 +31,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking for existing session
     const checkAuth = async () => {
-      // TODO: Replace with actual API call
-      const storedUser = localStorage.getItem("admin_user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        try {
+          const userData = await apiClient.getCurrentUser();
+          // Map backend user data to frontend User type
+          const mappedUser: User = {
+            id: userData.user_id,
+            username: userData.username,
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            name: userData.first_name && userData.last_name 
+              ? `${userData.first_name} ${userData.last_name}` 
+              : userData.username || userData.email,
+            email: userData.email,
+            role: userData.role || "customer",
+            avatar: userData.avatar_url,
+            phone: userData.phone,
+            bio: userData.bio,
+            verified: userData.verified,
+          };
+          setUser(mappedUser);
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+        }
       }
       setIsLoading(false);
     };
@@ -40,33 +68,74 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      const mockUser: User = {
-        id: "1",
-        name: "Admin User",
-        email: email,
-        role: "admin",
+      const response = await apiClient.login(email, password);
+      
+      // Store tokens
+      localStorage.setItem("access_token", response.access_token);
+      if (response.refresh_token) {
+        localStorage.setItem("refresh_token", response.refresh_token);
+      }
+      
+      // Map backend user data to frontend User type
+      const mappedUser: User = {
+        id: response.user.user_id || response.user.id,
+        username: response.user.username,
+        first_name: response.user.first_name,
+        last_name: response.user.last_name,
+        name: response.user.first_name && response.user.last_name 
+          ? `${response.user.first_name} ${response.user.last_name}` 
+          : response.user.username || response.user.email,
+        email: response.user.email,
+        role: response.user.role || "customer",
+        avatar: response.user.avatar_url,
+        phone: response.user.phone,
+        bio: response.user.bio,
+        verified: response.user.verified,
       };
-      setUser(mockUser);
-      localStorage.setItem("admin_user", JSON.stringify(mockUser));
-    } catch (error) {
+      
+      setUser(mappedUser);
+      
+      // Check if user is admin
+      if (mappedUser.role !== "admin") {
+        throw new Error("Access denied. Admin privileges required.");
+      }
+    } catch (error: any) {
       console.error("Login failed:", error);
-      throw error;
+      throw new Error(error.response?.data?.detail || error.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("admin_user");
+  const logout = async () => {
+    try {
+      await apiClient.logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+    }
   };
 
-  const updateUser = (userData: Partial<User>) => {
+  const updateUser = async (userData: Partial<User>) => {
     if (user) {
-      const updatedUser = { ...user, ...userData };
-      setUser(updatedUser);
-      localStorage.setItem("admin_user", JSON.stringify(updatedUser));
+      try {
+        await apiClient.updateProfile({
+          username: userData.username,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          phone: userData.phone,
+          bio: userData.bio,
+        });
+        
+        const updatedUser = { ...user, ...userData };
+        setUser(updatedUser);
+      } catch (error) {
+        console.error("Update user failed:", error);
+        throw error;
+      }
     }
   };
 
