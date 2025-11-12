@@ -195,6 +195,36 @@ class ApiClient {
     const response = await this.client.get('/admin/stats/overview');
     return response.data;
   }
+
+  async getAdminProducts(params?: {
+    page?: number;
+    page_size?: number;
+    search?: string;
+    category?: string;
+    is_active?: boolean;
+    is_sold?: boolean;
+    is_verified?: boolean;
+    is_flagged?: boolean;
+    stock_status?: string;
+  }) {
+    const response = await this.client.get('/admin/products', { params });
+    return response.data;
+  }
+
+  async updateAdminProduct(productId: string, data: {
+    is_active?: boolean;
+    is_verified?: boolean;
+    is_flagged?: boolean;
+    stock_status?: string;
+  }) {
+    const response = await this.client.patch(`/admin/products/${productId}`, data);
+    return response.data;
+  }
+
+  async deleteAdminProduct(productId: string) {
+    const response = await this.client.delete(`/admin/products/${productId}`);
+    return response.data;
+  }
 }
 
 export const apiClient = new ApiClient();
