@@ -224,6 +224,43 @@ class ApiClient {
     const response = await this.client.delete(`/admin/products/${productId}`);
     return response.data;
   }
+
+  // ============ ADMIN USER ENDPOINTS ============
+  async getAdminUsers(params?: {
+    page?: number;
+    page_size?: number;
+    search?: string;
+    role?: string;
+    status?: string;
+    is_verified?: boolean;
+  }) {
+    const response = await this.client.get('/admin/users', { params });
+    return response.data;
+  }
+
+  async updateAdminUser(userId: string, data: {
+    is_active?: boolean;
+    is_verified?: boolean;
+    role?: string;
+  }) {
+    const response = await this.client.patch(`/admin/users/${userId}`, data);
+    return response.data;
+  }
+
+  async banAdminUser(userId: string) {
+    const response = await this.client.post(`/admin/users/${userId}/ban`);
+    return response.data;
+  }
+
+  async unbanAdminUser(userId: string) {
+    const response = await this.client.post(`/admin/users/${userId}/unban`);
+    return response.data;
+  }
+
+  async deleteAdminUser(userId: string) {
+    const response = await this.client.delete(`/admin/users/${userId}`);
+    return response.data;
+  }
 }
 
 export const apiClient = new ApiClient();
