@@ -9,6 +9,7 @@ export interface User {
   name: string;
   email: string;
   role: "admin" | "seller" | "customer";
+  is_admin?: boolean;
   avatar?: string;
   phone?: string;
   bio?: string;
@@ -47,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               : userData.username || userData.email,
             email: userData.email,
             role: userData.role || "customer",
+            is_admin: userData.is_admin,
             avatar: userData.avatar_url,
             phone: userData.phone,
             bio: userData.bio,
@@ -87,18 +89,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           : response.user.username || response.user.email,
         email: response.user.email,
         role: response.user.role || "customer",
+        is_admin: response.user.is_admin,
         avatar: response.user.avatar_url,
         phone: response.user.phone,
         bio: response.user.bio,
         verified: response.user.verified,
       };
       
-      setUser(mappedUser);
-      
       // Check if user is admin
-      if (mappedUser.role !== "admin") {
+      if (!mappedUser.is_admin) {
         throw new Error("Access denied. Admin privileges required.");
       }
+      
+      setUser(mappedUser);
     } catch (error: any) {
       console.error("Login failed:", error);
       throw new Error(error.response?.data?.detail || error.message || "Login failed");
