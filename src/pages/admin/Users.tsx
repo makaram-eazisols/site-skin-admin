@@ -36,6 +36,7 @@ interface User {
   is_active: boolean;
   is_verified: boolean;
   is_banned: boolean;
+  is_admin: boolean;
   created_at: string;
 }
 
@@ -63,7 +64,9 @@ export default function Users() {
         search: searchTerm || undefined,
         exclude_admins: true,
       });
-      setUsers(data.users);
+      // Filter out admins on client side as well
+      const nonAdminUsers = data.users.filter((user: User) => !user.is_admin);
+      setUsers(nonAdminUsers);
       setTotalPages(data.total_pages);
     } catch (error) {
       toast({
