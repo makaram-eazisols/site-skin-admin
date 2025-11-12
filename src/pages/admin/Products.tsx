@@ -232,7 +232,7 @@ export default function Products() {
                       <TableRow key={product.id}>
                         <TableCell className="font-medium">{product.title}</TableCell>
                         <TableCell>{product.category || "—"}</TableCell>
-                        <TableCell className="font-semibold">${product.price.toFixed(2)}</TableCell>
+                        <TableCell className="font-semibold">${Number(product.price).toFixed(2)}</TableCell>
                         <TableCell>{product.stock_quantity}</TableCell>
                         <TableCell>
                           <Badge variant={getStatusBadgeVariant(product)}>
