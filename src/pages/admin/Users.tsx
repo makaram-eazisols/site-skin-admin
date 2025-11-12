@@ -226,7 +226,7 @@ export default function Users() {
                     <TableRow>
                       <TableHead>User</TableHead>
                       <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
+                      {/* <TableHead>Phone</TableHead> */}
                       <TableHead>Status</TableHead>
                       <TableHead>Joined</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
@@ -260,7 +260,7 @@ export default function Users() {
                             </div>
                           </TableCell>
                           <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                          <TableCell className="text-muted-foreground">{user.phone || "-"}</TableCell>
+                          {/* <TableCell className="text-muted-foreground">{user.phone || "-"}</TableCell> */}
                           <TableCell>
                             <Badge variant={getStatusBadgeVariant(user)}>{getStatusText(user)}</Badge>
                           </TableCell>
