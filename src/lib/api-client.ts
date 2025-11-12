@@ -233,6 +233,7 @@ class ApiClient {
     role?: string;
     status?: string;
     is_verified?: boolean;
+    exclude_admins?: boolean;
   }) {
     const response = await this.client.get('/admin/users', { params });
     return response.data;
@@ -241,7 +242,6 @@ class ApiClient {
   async updateAdminUser(userId: string, data: {
     is_active?: boolean;
     is_verified?: boolean;
-    role?: string;
   }) {
     const response = await this.client.patch(`/admin/users/${userId}`, data);
     return response.data;

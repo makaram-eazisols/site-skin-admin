@@ -27,13 +27,15 @@ interface User {
   id: string;
   email: string;
   username: string;
-  full_name: string;
+  first_name: string;
+  last_name: string;
   avatar_url?: string;
-  role: string;
+  phone?: string;
+  country?: string;
+  bio?: string;
   is_active: boolean;
   is_verified: boolean;
   is_banned: boolean;
-  total_sales?: number;
   created_at: string;
 }
 
@@ -59,6 +61,7 @@ export default function Users() {
         page: currentPage,
         page_size: 10,
         search: searchTerm || undefined,
+        exclude_admins: true,
       });
       setUsers(data.users);
       setTotalPages(data.total_pages);
@@ -129,7 +132,6 @@ export default function Users() {
       await apiClient.updateAdminUser(editUser.id, {
         is_active: editUser.is_active,
         is_verified: editUser.is_verified,
-        role: editUser.role,
       });
       toast({
         title: "Success",
@@ -219,9 +221,8 @@ export default function Users() {
                     <TableRow>
                       <TableHead>User</TableHead>
                       <TableHead>Email</TableHead>
-                      <TableHead>Role</TableHead>
+                      <TableHead>Phone</TableHead>
                       <TableHead>Status</TableHead>
-                      <TableHead>Total Sales</TableHead>
                       <TableHead>Joined</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -229,7 +230,7 @@ export default function Users() {
                   <TableBody>
                     {users.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                           No users found
                         </TableCell>
                       </TableRow>
@@ -241,28 +242,21 @@ export default function Users() {
                               <Avatar>
                                 {user.avatar_url && <AvatarImage src={user.avatar_url} />}
                                 <AvatarFallback className="gradient-driptyard text-white">
-                                  {user.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || user.username?.[0]?.toUpperCase() || 'U'}
+                                  {user.first_name?.[0]?.toUpperCase()}{user.last_name?.[0]?.toUpperCase() || user.username?.[0]?.toUpperCase() || 'U'}
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <div className="font-medium">{user.full_name || user.username}</div>
+                                <div className="font-medium">{user.first_name} {user.last_name}</div>
                                 <div className="text-xs text-muted-foreground">@{user.username}</div>
                               </div>
                             </div>
                           </TableCell>
                           <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className="capitalize">
-                              {user.role}
-                            </Badge>
-                          </TableCell>
+                          <TableCell className="text-muted-foreground">{user.phone || '-'}</TableCell>
                           <TableCell>
                             <Badge variant={getStatusBadgeVariant(user)}>
                               {getStatusText(user)}
                             </Badge>
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            ${user.total_sales?.toFixed(2) || '0.00'}
                           </TableCell>
                           <TableCell>{format(new Date(user.created_at), 'MMM dd, yyyy')}</TableCell>
                           <TableCell className="text-right">
@@ -361,25 +355,6 @@ export default function Users() {
                     setEditUser({ ...editUser, is_verified: checked })
                   }
                 />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="role">Role</Label>
-                <Select
-                  value={editUser.role}
-                  onValueChange={(value) =>
-                    setEditUser({ ...editUser, role: value })
-                  }
-                >
-                  <SelectTrigger id="role">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="user">User</SelectItem>
-                    <SelectItem value="seller">Seller</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
 
               <div className="flex justify-end gap-2 pt-4">
