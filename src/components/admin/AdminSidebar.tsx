@@ -27,19 +27,20 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 
+// MILESTONE 3: Admin Panel & Moderation System
 const menuItems = [
   { title: "Dashboard", url: "/admin", icon: Home, end: true },
   { title: "Products", url: "/admin/products", icon: Package2 },
-  { title: "Orders", url: "/admin/orders", icon: ShoppingBag },
+  // { title: "Orders", url: "/admin/orders", icon: ShoppingBag }, // Future milestone
   { title: "Users", url: "/admin/users", icon: Users2 },
-  { title: "Categories", url: "/admin/categories", icon: Grid3x3 },
+  // { title: "Categories", url: "/admin/categories", icon: Grid3x3 }, // Future milestone
   { title: "Flagged Content", url: "/admin/flagged", icon: Flag },
-  { title: "Appeals", url: "/admin/appeals", icon: MessageSquare },
+  // { title: "Appeals", url: "/admin/appeals", icon: MessageSquare }, // Future milestone
   { title: "Spotlight", url: "/admin/spotlight", icon: Star },
-  { title: "Payouts", url: "/admin/payouts", icon: DollarSign },
-  { title: "Business Verification", url: "/admin/verification", icon: Building2 },
-  { title: "Analytics", url: "/admin/analytics", icon: LineChart },
-  { title: "Settings", url: "/admin/settings", icon: Settings2 },
+  // { title: "Payouts", url: "/admin/payouts", icon: DollarSign }, // Future milestone
+  // { title: "Business Verification", url: "/admin/verification", icon: Building2 }, // Future milestone
+  // { title: "Analytics", url: "/admin/analytics", icon: LineChart }, // Future milestone
+  // { title: "Settings", url: "/admin/settings", icon: Settings2 }, // Future milestone
 ];
 
 export function AdminSidebar() {
