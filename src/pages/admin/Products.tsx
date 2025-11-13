@@ -17,29 +17,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -108,7 +90,7 @@ export default function Products() {
 
   const handleDelete = async () => {
     if (!deleteProductId) return;
-    
+
     try {
       await apiClient.deleteAdminProduct(deleteProductId);
       toast({
@@ -178,10 +160,10 @@ export default function Products() {
             <h1 className="text-3xl font-bold gradient-driptyard-text">Products</h1>
             <p className="text-muted-foreground mt-1">Manage your product inventory</p>
           </div>
-          <Button className="gradient-driptyard-hover text-white shadow-md">
+          {/* <Button className="gradient-driptyard-hover text-white shadow-md">
             <Plus className="h-4 w-4 mr-2" strokeWidth={2.5} />
             Add Product
-          </Button>
+          </Button> */}
         </div>
 
         <Card>
@@ -189,8 +171,8 @@ export default function Products() {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input 
-                  placeholder="Search products..." 
+                <Input
+                  placeholder="Search products..."
                   className="pl-10 bg-background"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -234,9 +216,7 @@ export default function Products() {
                         <TableCell className="font-semibold">${Number(product.price).toFixed(2)}</TableCell>
                         <TableCell>{product.condition || "—"}</TableCell>
                         <TableCell>
-                          <Badge variant={getStatusBadgeVariant(product)}>
-                            {getStatusText(product)}
-                          </Badge>
+                          <Badge variant={getStatusBadgeVariant(product)}>{getStatusText(product)}</Badge>
                         </TableCell>
                         <TableCell className="text-right">
                           <DropdownMenu>
@@ -246,14 +226,11 @@ export default function Products() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem 
-                                className="cursor-pointer"
-                                onClick={() => setEditProduct(product)}
-                              >
+                              <DropdownMenuItem className="cursor-pointer" onClick={() => setEditProduct(product)}>
                                 <Edit2 className="h-4 w-4 mr-2" />
                                 Edit
                               </DropdownMenuItem>
-                              <DropdownMenuItem 
+                              <DropdownMenuItem
                                 className="text-destructive cursor-pointer focus:text-destructive"
                                 onClick={() => setDeleteProductId(product.id)}
                               >
@@ -270,11 +247,7 @@ export default function Products() {
 
                 {totalPages > 1 && (
                   <div className="flex items-center justify-center gap-2 mt-6">
-                    <Button
-                      variant="outline"
-                      onClick={() => setPage(p => Math.max(1, p - 1))}
-                      disabled={page === 1}
-                    >
+                    <Button variant="outline" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>
                       Previous
                     </Button>
                     <span className="text-sm text-muted-foreground">
@@ -282,7 +255,7 @@ export default function Products() {
                     </span>
                     <Button
                       variant="outline"
-                      onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       disabled={page === totalPages}
                     >
                       Next
@@ -330,9 +303,7 @@ export default function Products() {
                 <Switch
                   id="is-active"
                   checked={editProduct.is_active}
-                  onCheckedChange={(checked) =>
-                    setEditProduct({ ...editProduct, is_active: checked })
-                  }
+                  onCheckedChange={(checked) => setEditProduct({ ...editProduct, is_active: checked })}
                 />
               </div>
 
@@ -341,9 +312,7 @@ export default function Products() {
                 <Switch
                   id="is-verified"
                   checked={editProduct.is_verified}
-                  onCheckedChange={(checked) =>
-                    setEditProduct({ ...editProduct, is_verified: checked })
-                  }
+                  onCheckedChange={(checked) => setEditProduct({ ...editProduct, is_verified: checked })}
                 />
               </div>
 
@@ -352,9 +321,7 @@ export default function Products() {
                 <Switch
                   id="is-flagged"
                   checked={editProduct.is_flagged}
-                  onCheckedChange={(checked) =>
-                    setEditProduct({ ...editProduct, is_flagged: checked })
-                  }
+                  onCheckedChange={(checked) => setEditProduct({ ...editProduct, is_flagged: checked })}
                 />
               </div>
 
@@ -363,9 +330,7 @@ export default function Products() {
                 <Switch
                   id="is-featured"
                   checked={editProduct.is_featured}
-                  onCheckedChange={(checked) =>
-                    setEditProduct({ ...editProduct, is_featured: checked })
-                  }
+                  onCheckedChange={(checked) => setEditProduct({ ...editProduct, is_featured: checked })}
                 />
               </div>
 
